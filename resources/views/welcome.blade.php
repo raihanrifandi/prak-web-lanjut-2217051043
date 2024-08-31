@@ -38,7 +38,7 @@
                     </svg>
                 </div>
 
-                <div style="color: white; font-size: 48px; margin-top: 24px; text-align: center;">
+                <div style="color: white; font-size: 48px; margin-top: 24px; text-align: center; font-weight: 600;">
                     Raihan Rifandi - 2217051043
                 </div>
 
