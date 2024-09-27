@@ -100,22 +100,38 @@
         <h1>Create an Account</h1>
         <form action="{{ route('user.store') }}" method="POST" class="space-y-4">
             @csrf
+            @error('nama')
+                <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
+            @enderror
             <div class="floating-placeholder-group">
-                <input type="text" name="nama" id="nama" placeholder=" " required>
+                <input type="text" name="nama" id="nama" placeholder=" " value="{{ old('nama') }}">
                 <label for="nama">Nama</label>
+                <!-- Tampilkan error jika ada -->
             </div>
+            @error('npm')
+                <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
+            @enderror
             <div class="floating-placeholder-group">
-                <input type="text" name="npm" id="npm" placeholder=" " required>
+                <input type="text" name="npm" id="npm" placeholder=" " value="{{ old('npm') }}">
                 <label for="npm">NPM</label>
             </div>
-            <div class="floating-placeholder-group">
-                <input type="text" name="kelas" id="kelas" placeholder=" " required>
-                <label for="kelas">Kelas</label>
-            </div>
+            @error('kelas_id')
+                <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
+            @enderror
+            <div>
+                <select name="kelas_id" id="kelas_id" class="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                    <!-- Mengubah teks placeholder pada dropdown -->
+                    <option value="" disabled selected>-- Pilih Kelas --</option>
+                    @foreach ($kelas as $kelasItem)
+                        <option value="{{ $kelasItem->id }}" {{ old('kelas_id') == $kelasItem->id ? 'selected' : '' }}>
+                            {{ $kelasItem->nama_kelas }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>            
             <br><br>
             <button type="submit" class="submit-button">Submit</button>
         </form>
     </div>
-
 </body>
 </html>

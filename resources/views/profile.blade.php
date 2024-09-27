@@ -34,7 +34,7 @@
                 <span class="gradient-text">{{ $npm }}</span>
             </div>
             <div class="glass bg-gray-200 bg-opacity-5 text-center py-2 font-bold rounded-md">
-                <span class="gradient-text">{{ $kelas }}</span>
+                <span class="gradient-text">{{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</span>
             </div>
         </div>
     </div>
