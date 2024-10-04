@@ -11,6 +11,12 @@ class UserModel extends Model
 
     protected $table = 'user';
     protected $guarded = ['id'];
+    protected $fillable = [
+        'nama',
+        'npm',
+        'kelas_id',
+        'foto',
+    ];
 
     public function kelas ()
     {
