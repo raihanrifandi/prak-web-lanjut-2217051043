@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @extends('layouts.app')
+    @section('title', 'Create Account')
+    @push('styles')
     <style>
         body {
             background-image: url('../../assets/images/css.png');
@@ -91,9 +87,12 @@
         .submit-button:hover {
             background-color: #555;
         }
+
     </style>
-</head>
-<body class="flex items-center justify-center min-h-screen">
+    @endpush
+
+@section('content')
+<div class="flex items-center justify-center min-h-screen">
 
     <div class="minimalist-card">
         <img src="{{ asset('assets/images/user.png') }}" alt="" class="mx-auto w-12 h-12 mb-4">
@@ -133,5 +132,6 @@
             <button type="submit" class="submit-button">Submit</button>
         </form>
     </div>
-</body>
-</html>
+</div>
+@endsection
+

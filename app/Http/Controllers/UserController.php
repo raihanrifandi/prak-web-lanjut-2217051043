@@ -2,31 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\UserModel;
-use Illuminate\Http\Request;
 
 
 class UserController extends Controller
 {
-    // public function profile($nama ="", $kelas="", $npm="")
-    // {
-    //     $data = [
-    //         'nama' => $nama,
-    //         'kelas' => $kelas,
-    //         'npm' => $npm,
-    //     ];
-    //     return view('profile', $data);
-    // }
+    public $userModel;
+    public $kelasModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->kelasModel = new Kelas();
+    }
+
+    public function index()
+    {
+        $data = [
+            'users' => $this->userModel->getUser(),
+        ];
+
+        return view('list_user', $data);
+    }
 
     public function create(){
-        return view('create_user', [
-            'kelas' => Kelas::all(),
-        ]);
+        $kelasModel = new Kelas();
+
+        $kelas = $kelasModel->getKelas();
+
+        $data = [
+            'kelas' => $kelas,
+        ];
+
+        return view('create_user', $data);
+
     }
 
     public function store(Request $request)
     {
+        $this->userModel->create([
+            'nama' => $request->input('nama'),
+            'npm' => $request->input('npm'),
+            'kelas_id' => $request->input('kelas_id'),
+        ]);
+    
+        return redirect()->to('/user');
+
+        // Validation Form
         $validatedData = $request->validate([
             'nama' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
             'npm' => 'required|string|max:255|unique:user,npm',
@@ -40,15 +64,14 @@ class UserController extends Controller
             'kelas_id.exists' => 'Kelas yang dipilih tidak valid.',
         ]);
 
-           $user = UserModel::create($validatedData);
-           
-           $user->load('kelas');
+        $user = UserModel::create($validatedData);  
+        $user->load('kelas');
 
-        return view('profile', [
-            'nama' => $user->nama,
-            'npm' => $user->npm,
-            'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
-        ]);
+        // return view('profile', [
+        //     'nama' => $user->nama,
+        //     'npm' => $user->npm,
+        //     'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
+        // ]);
 
     }
 }
