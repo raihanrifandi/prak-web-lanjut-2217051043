@@ -76,7 +76,8 @@
             <td><?= $user['nama'] ?></td>
             <td><?= $user['npm'] ?></td>
             <td><?= $user['nama_kelas'] ?></td>
-            <td></td>
+            <td><a href="{{ route('user.show', $user->id) }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+                Detail</a></td>
         </tr>
         <?php
       }

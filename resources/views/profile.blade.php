@@ -11,9 +11,14 @@
 <body class="flex items-center justify-center min-h-screen">
 <div>
     <img src="{{ asset('assets/images/light.png') }}" alt="Light Effect" class="light-effect">
+    <!-- Profile -->
     <div class="glass w-80 h-128 p-6 rounded-xl shadow-lg flex flex-col items-center">
         <div class="w-32 h-32 rounded-full bg-gray-300 mb-6 flex items-center justify-center overflow-hidden">
-            <img src="{{ asset('assets/images/profile.jpg') }}" alt="Profile Image" class="w-full h-full object-cover">
+            @if ($user->foto)
+                <img src="{{ asset('assets/upload/img/' . $user->foto) }}" alt="Profile Image" class="w-full h-full object-cover">
+            @else
+                <img src="{{ asset('assets/images/profile.jpg') }}" alt="Default Profile Image" class="w-full h-full object-cover">
+            @endif
         </div>
         <br>
 
@@ -28,13 +33,13 @@
         <br>
         <div class="w-full space-y-4">
             <div class="glass bg-gray-200 bg-opacity-5 text-center py-2 font-bold rounded-md">
-                <span class="gradient-text">{{ $nama }}</span>
+                <span class="gradient-text">{{ $user->nama }}</span>
             </div>
             <div class="glass bg-gray-200 bg-opacity-5 text-center py-2 font-bold rounded-md">
-                <span class="gradient-text">{{ $npm }}</span>
+                <span class="gradient-text">{{ $user->npm }}</span>
             </div>
             <div class="glass bg-gray-200 bg-opacity-5 text-center py-2 font-bold rounded-md">
-                <span class="gradient-text">{{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</span>
+                <span class="gradient-text">{{ $user->nama_kelas ?? 'Kelas tidak ditemukan' }}</span>
             </div>
         </div>
     </div>
