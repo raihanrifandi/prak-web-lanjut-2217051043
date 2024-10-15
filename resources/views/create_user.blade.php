@@ -97,7 +97,7 @@
     <div class="minimalist-card">
         <img src="{{ asset('assets/images/user.png') }}" alt="" class="mx-auto w-12 h-12 mb-4">
         <h1>Create an Account</h1>
-        <form action="{{ route('user.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             @error('nama')
                 <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
@@ -127,7 +127,9 @@
                         </option>
                     @endforeach
                 </select>
-            </div>            
+            </div>
+            <input type="file" id="foto" name="foto"><br><br>
+            <label for="foto">Foto: </label>            
             <br><br>
             <button type="submit" class="submit-button">Submit</button>
         </form>
