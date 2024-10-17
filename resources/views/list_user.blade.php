@@ -76,8 +76,24 @@
             <td><?= $user['nama'] ?></td>
             <td><?= $user['npm'] ?></td>
             <td><?= $user['nama_kelas'] ?></td>
-            <td><a href="{{ route('user.show', $user->id) }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
-                Detail</a></td>
+            <td>
+                <a href="{{ route('user.show', $user['id']) }}" class="inline-block text-blue-500 hover:text-blue-700 transition">
+                    <i class="fas fa-eye"></i>
+                </a>
+            
+                <a href="{{ route('user.edit', $user['id']) }}" class="text-green-500 hover:text-green-700 mx-3 transition">
+                    <i class="fas fa-edit"></i>
+                </a>
+            
+                <form action="{{ route('user.destroy', $user['id']) }}" method="POST" id="deleteForm-{{ $user['id'] }}" class="inline-block">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="text-red-500 hover:text-red-700 deleteButton transition">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            </td>
+            
         </tr>
         <?php
       }
