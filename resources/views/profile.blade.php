@@ -15,9 +15,9 @@
     <div class="glass w-80 h-128 p-6 rounded-xl shadow-lg flex flex-col items-center">
         <div class="w-32 h-32 rounded-full bg-gray-300 mb-6 flex items-center justify-center overflow-hidden">
             @if ($user->foto)
-                <img src="{{ asset('assets/upload/img/' . $user->foto) }}" alt="Profile Image" class="w-full h-full object-cover">
+                <img src="{{ asset('storage/uploads/' . $user->foto) }}" alt="Profile Image" class="w-full h-full object-cover">
             @else
-                <img src="{{ asset('assets/images/profile.jpg') }}" alt="Default Profile Image" class="w-full h-full object-cover">
+                <img src="{{ asset('assets/images/defaultProfile.jpg') }}" alt="Default Profile Image" class="w-full h-full object-cover">
             @endif
         </div>
         <br>

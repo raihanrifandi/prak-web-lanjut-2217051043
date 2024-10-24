@@ -102,14 +102,16 @@
             @error('nama')
                 <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
             @enderror
+            <!-- Field Nama -->
             <div class="floating-placeholder-group">
                 <input type="text" name="nama" id="nama" placeholder=" " value="{{ old('nama') }}">
                 <label for="nama">Nama</label>
-                <!-- Tampilkan error jika ada -->
+                <!-- Field akan menampilkan error jika terdapat kondisi yg tertrigger pada user controller -->
             </div>
             @error('npm')
                 <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
             @enderror
+            <!-- Field NPM -->
             <div class="floating-placeholder-group">
                 <input type="text" name="npm" id="npm" placeholder=" " value="{{ old('npm') }}">
                 <label for="npm">NPM</label>
@@ -117,6 +119,7 @@
             @error('kelas_id')
                 <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
             @enderror
+            <!-- Dropdown Kelas -->
             <div>
                 <select name="kelas_id" id="kelas_id" class="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
                     <!-- Mengubah teks placeholder pada dropdown -->
@@ -128,12 +131,36 @@
                     @endforeach
                 </select>
             </div>
-            <input type="file" id="foto" name="foto"><br><br>
-            <label for="foto">Foto: </label>            
-            <br><br>
+            <!-- Upload File -->
+            <div>
+                <label for="foto">Foto: </label>  
+                <input type="file" id="foto" name="foto" accept="image/*" onchange="previewImage(event)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-purple-300 focus:border-transparent transition duration-300 ease-in-out"><br>
+                <img id="imagePreview" src="#" alt="Preview Image" class="w-32 h-32 mt-3 object-cover rounded-lg hidden">          
+                <br><br>
+            </div>
             <button type="submit" class="submit-button">Submit</button>
         </form>
     </div>
 </div>
 @endsection
 
+<!-- Menampilkan preview gambar yang diupload user -->
+@push('scripts')
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('imagePreview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden'); 
+            };
+
+            reader.readAsDataURL(input.files[0]); 
+        }
+    }
+</script>
+@endpush
