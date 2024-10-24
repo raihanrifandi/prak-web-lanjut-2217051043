@@ -30,12 +30,17 @@ class UserController extends Controller
     {
         $kelas = $this->kelasModel->getKelas();
 
+        // Buat user kosong jika tidak ada
+        $user = new UserModel();
+
         $data = [
             'kelas' => $kelas,
+            'user' => $user,
         ];
 
         return view('create_user', $data);
     }
+
 
     public function store(Request $request)
     {
@@ -58,7 +63,7 @@ class UserController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoName = time() . '_' . $foto->getClientOriginalName();
-            $fotoPath = $foto->move(public_path('assets/upload/img'), $fotoName);
+            $fotoPath = $foto->storeAs('uploads', $fotoName);
         } else {
             $fotoPath = null; // Jika tidak ada foto yang diupload
         }
@@ -71,7 +76,7 @@ class UserController extends Controller
             'foto' => $fotoPath ? $fotoName : null, // Simpan nama file jika ada
         ]);
 
-        return redirect()->to('/user')->with('success', 'User berhasil ditambahkan');
+        return redirect()->to('/')->with('success', 'User berhasil ditambahkan');
     }
 
     public function show($id)
@@ -106,13 +111,13 @@ class UserController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoName = time() . '_' . $foto->getClientOriginalName();
-            $fotoPath = $foto->move(public_path('upload/img'), $fotoName); // Pindahkan file
+            $fotoPath = $foto->storeAs('uploads', $fotoName); // Pindahkan file
             $user->foto = $fotoName; // Simpan nama file ke database
         }
 
         $user->save();
 
-        return redirect()->route('user.list')->with('success', 'user updated successfully');
+        return redirect()->to('/')->with('success', 'User berhasil ditambahkan');
     }
 
     public function destroy($id)

@@ -50,6 +50,13 @@
 .table-group-divider {
     border-top: 2px solid #e9ecef;
 }
+
+.img-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
 </style>
 @endpush
 
@@ -61,6 +68,7 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
+            <th scope="col">Foto</th>
             <th scope="col">Nama</th>
             <th scope="col">NPM</th>
             <th scope="col">Kelas</th>
@@ -73,18 +81,28 @@
       ?>
         <tr>
             <td><?= $user['id'] ?></td>
+            <td>
+                @if ($user['foto'])
+                    <img src="{{ asset('storage/uploads/' . $user['foto']) }}" alt="Foto User" class="img-thumbnail">
+                @else
+                <img src="{{ asset('assets/images/defaultProfile.jpg') }}" alt="Default Profile Image" class="img-thumbnail">
+                @endif
+            </td> 
             <td><?= $user['nama'] ?></td>
             <td><?= $user['npm'] ?></td>
             <td><?= $user['nama_kelas'] ?></td>
             <td>
+                <!-- View Button -->
                 <a href="{{ route('user.show', $user['id']) }}" class="inline-block text-blue-500 hover:text-blue-700 transition">
                     <i class="fas fa-eye"></i>
                 </a>
-            
+
+                <!-- Edit Button -->
                 <a href="{{ route('user.edit', $user['id']) }}" class="text-green-500 hover:text-green-700 mx-3 transition">
                     <i class="fas fa-edit"></i>
                 </a>
-            
+
+                <!-- Delete Button -->
                 <form action="{{ route('user.destroy', $user['id']) }}" method="POST" id="deleteForm-{{ $user['id'] }}" class="inline-block">
                     @csrf
                     @method('DELETE')
