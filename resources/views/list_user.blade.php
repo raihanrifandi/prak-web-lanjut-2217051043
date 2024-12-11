@@ -72,6 +72,7 @@
             <th scope="col">Nama</th>
             <th scope="col">NPM</th>
             <th scope="col">Kelas</th>
+            <th>Fakultas</th>
             <th scope="col">Aksi</th>
         </tr>
     </thead>
@@ -91,6 +92,7 @@
             <td><?= $user['nama'] ?></td>
             <td><?= $user['npm'] ?></td>
             <td><?= $user['nama_kelas'] ?></td>
+            <td>{{ $user->nama_fakultas }}</td>
             <td>
                 <!-- View Button -->
                 <a href="{{ route('user.show', $user['id']) }}" class="inline-block text-blue-500 hover:text-blue-700 transition">

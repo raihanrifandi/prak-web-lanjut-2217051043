@@ -131,6 +131,20 @@
                     @endforeach
                 </select>
             </div>
+            <!-- Dropdown Jurusan -->
+            <div>
+                <select name="jurusan_id" id="jurusan_id" class="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                    <option value="" disabled selected>-- Pilih Jurusan --</option>
+                    @foreach ($jurusan as $jurusanItem)
+                        <option value="{{ $jurusanItem->id }}" {{ old('jurusan_id') == $jurusanItem->id ? 'selected' : '' }}>
+                            {{ $jurusanItem->nama_jurusan }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('jurusan_id')
+                    <p class="text-red-500 mt-1 mb-2">{{ $message }}</p>
+                @enderror
+            </div>
             <!-- Upload File -->
             <div>
                 <label for="foto">Foto: </label>  

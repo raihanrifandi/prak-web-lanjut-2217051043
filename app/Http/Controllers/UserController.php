@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\UserModel;
+use App\Models\Jurusan;
 
 class UserController extends Controller
 {
     public $userModel;
     public $kelasModel;
+    public $jurusanModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->kelasModel = new Kelas();
+        $this->jurusanModel =new Jurusan();
     }
 
     public function index()
@@ -29,12 +32,14 @@ class UserController extends Controller
     public function create()
     {
         $kelas = $this->kelasModel->getKelas();
+        $jurusan = Jurusan::all();
 
         // Buat user kosong jika tidak ada
         $user = new UserModel();
 
         $data = [
             'kelas' => $kelas,
+            'jurusan'=> $jurusan,
             'user' => $user,
         ];
 
@@ -49,6 +54,7 @@ class UserController extends Controller
             'nama' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
             'npm' => 'required|string|max:255|unique:user,npm',
             'kelas_id' => 'required|exists:kelas,id',
+            'jurusan_id' => 'required|exists:jurusan,id',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'nama.required' => 'Nama wajib diisi.',
@@ -57,6 +63,8 @@ class UserController extends Controller
             'npm.unique' => 'NPM ini sudah terdaftar. Silahkan gunakan NPM lain.',
             'kelas_id.required' => 'Kelas wajib dipilih.',
             'kelas_id.exists' => 'Kelas yang dipilih tidak valid.',
+            'jurusan_id.required' => 'Jurusan wajib dipilih.',
+            'jurusan_id.exists' => 'Jurusan yang dipilih tidak valid.',
         ]);
 
         // Cek jika ada file yang diupload
@@ -73,7 +81,8 @@ class UserController extends Controller
             'nama' => $validatedData['nama'],
             'npm' => $validatedData['npm'],
             'kelas_id' => $validatedData['kelas_id'],
-            'foto' => $fotoPath ? $fotoName : null, // Simpan nama file jika ada
+            'jurusan_id' => $validatedData['jurusan_id'], 
+            'foto' => $fotoPath ? $fotoName : null,
         ]);
 
         return redirect()->to('/')->with('success', 'User berhasil ditambahkan');
